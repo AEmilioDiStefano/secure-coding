@@ -26,9 +26,11 @@ T add_numbers(T const& start, T const& increment, unsigned long int const& steps
 //////////////////////////////////////////////////////////////////////
 
         // If the calculation causes overflow,
-        if (start > INT_MAX - increment) {
-            // then throw an overflow error with the text 'Overflow'.
-            throw std::overflow_error("Overflow");
+        if (increment >= 0 && result > std::numeric_limits<T>::max() - increment) {
+            throw std::overflow_error("Incorrect due to overflow");
+        }
+        else if (increment < 0 && result < std::numeric_limits<T>::min() - increment) {
+            throw std::underflow_error("Incorrect due to unnderflow");
         }
 
 //////////////////////////////////////////////////////////////////////
@@ -63,9 +65,11 @@ T subtract_numbers(T const& start, T const& decrement, unsigned long int const& 
 //////////////////////////// START ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
-        // If the calculation causes underflow,
-        if (start < INT_MIN - decrement) {
-            // throw an underflow error with the text 'Underflow'.
+        // If the calculation causes overflow,
+        if (decrement < 0 && result > std::numeric_limits<T>::max() + decrement) {
+            throw std::overflow_error("Overflow");
+        }
+        else if (decrement >= 0 && result < std::numeric_limits<T>::min() + decrement) {
             throw std::underflow_error("Underflow");
         }
 
