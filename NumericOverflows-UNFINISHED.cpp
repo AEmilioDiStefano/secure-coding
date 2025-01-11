@@ -27,10 +27,10 @@ T add_numbers(T const& start, T const& increment, unsigned long int const& steps
 
         // If the calculation causes overflow,
         if (increment >= 0 && result > std::numeric_limits<T>::max() - increment) {
-            throw std::overflow_error("Incorrect due to overflow");
+            throw std::overflow_error("Invalid due to overflow");
         }
         else if (increment < 0 && result < std::numeric_limits<T>::min() - increment) {
-            throw std::underflow_error("Incorrect due to unnderflow");
+            throw std::underflow_error("Invalid due to underflow");
         }
 
 //////////////////////////////////////////////////////////////////////
@@ -67,10 +67,10 @@ T subtract_numbers(T const& start, T const& decrement, unsigned long int const& 
 
         // If the calculation causes overflow,
         if (decrement < 0 && result > std::numeric_limits<T>::max() + decrement) {
-            throw std::overflow_error("Overflow");
+            throw std::overflow_error("Invalid due to overflow");
         }
         else if (decrement >= 0 && result < std::numeric_limits<T>::min() + decrement) {
-            throw std::underflow_error("Underflow");
+            throw std::underflow_error("Invalid due to underflow");
         }
 
 //////////////////////////////////////////////////////////////////////
@@ -125,23 +125,16 @@ void test_overflow()
 /////////////////////////// START /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
-    //   ______ _______   __
-    //  | ____ |_  _ \ \ / /
-    //  | |__    | |  \ V /
-    //  |  __|   | |   > <
-    //  | |     _| |_ / . \
-    //  |_|    |_____/_/ \_\
+    // Show the result of subtracting the numbers without overflow.
+    std::cout << "\tAdding Numbers Without Overflow (" << +start << ", " << +increment << ", " << steps << ") = ";
+    T result = add_numbers<T>(start, increment, steps);
+    std::cout << +result << std::endl;
 
-
-    // Use 'try' and 'catch' blocks to handle exceptions.
+    // Show the result of subtracting the numbers with overflow.
+    std::cout << "\tAdding Numbers With Overflow (" << +start << ", " << +increment << ", " << (steps + 1) << ") = ";
+    
+    // Use 'try' and 'catch' blocks to handle exceptions when adding with overflow.
     try {
-        // Show the result of subtracting the numbers without overflow.
-        std::cout << "\tAdding Numbers Without Overflow (" << +start << ", " << +increment << ", " << steps << ") = ";
-        T result = add_numbers<T>(start, increment, steps);
-        std::cout << +result << std::endl;
-
-        // Show the result of subtracting the numbers with overflow.
-        std::cout << "\tAdding Numbers With Overflow (" << +start << ", " << +increment << ", " << (steps + 1) << ") = ";
         result = add_numbers<T>(start, increment, steps + 1);
         std::cout << +result << std::endl;
     }
@@ -150,6 +143,14 @@ void test_overflow()
     catch (const std::overflow_error& error) {
         std::cout << error.what() << std::endl;
     }
+
+    // Catch and print an error if anything other than an overflow causes an error.
+    catch (const std::exception& ex) {
+    std::cout << "An unknown error occured" << ex.what();
+    }
+
+    // Add an extra line between calculations.
+    std::cout << std::endl;
 
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
@@ -201,26 +202,34 @@ void test_underflow()
     //  | |__    | |  \ V /
     //  |  __|   | |   > <
     //  | |     _| |_ / . \
-    //  |_|    |_____/_/ \_\
+    //  |_|    |_____/_/ \_\ 
+    
+    // Show the result of subtracting the numbers without overflow.
+    std::cout << "\tSubtracting Numbers Without Overflow (" << +start << ", " << +decrement << ", " << steps << ") = ";
+    auto result = subtract_numbers<T>(start, decrement, steps);
+    std::cout << +result << std::endl;
 
-
-    // Use 'try' and 'catch' blocks to handle exceptions. 
+    // Show the result of subtracting the numbers with overflow.
+    std::cout << "\tSubtracting Numbers With Overflow (" << +start << ", " << +decrement << ", " << (steps + 1) << ") = ";
+    
+    // Use 'try' and 'catch' blocks to handle exceptions.
     try {
-        // Show the result of subtracting the numbers without overflow.
-        std::cout << "\tSubtracting Numbers Without Overflow (" << +start << ", " << +decrement << ", " << steps << ") = ";
-        auto result = subtract_numbers<T>(start, decrement, steps);
-        std::cout << +result << std::endl;
-
-        // Show the result of subtracting the numbers with overflow.
-        std::cout << "\tSubtracting Numbers With Overflow (" << +start << ", " << +decrement << ", " << (steps + 1) << ") = ";
         result = subtract_numbers<T>(start, decrement, steps + 1);
-        std::cout << +result << std::endl;        
+        std::cout << +result << std::endl;
     }
 
     // Catch and print any underflow errors.
     catch (const std::underflow_error& error) {
         std::cout << error.what() << std::endl;
     }
+
+    // Catch and print an error if anything other than an underflow causes an error.
+    catch (const std::exception& ex) {
+        std::cout << "An unknown error occured" << ex.what();
+    }
+
+    // Add an extra line between calculations.
+    std::cout << std::endl;
 
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
