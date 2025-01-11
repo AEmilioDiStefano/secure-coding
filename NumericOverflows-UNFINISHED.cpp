@@ -148,7 +148,7 @@ void test_overflow()
         std::cout << error.what() << std::endl;
     }
 
-    // Catch and print an error if anything other than an overflow causes an error.
+    // Catch and print an exception if anything other than an overflow causes an error.
     catch (const std::exception& ex) 
     {
     std::cout << "An unknown error occured" << ex.what();
@@ -189,7 +189,7 @@ void test_underflow()
     //  how many times will we iterate
     const unsigned long int steps = 5;
     // how much will we subtract each step (result should be: start - (increment * steps))
-    const T decrement = std::numeric_limits<T>::max() / steps;  //MISTAKE!!! THIS VALUE DOESN'T WORK FOR OVERFLOWING A SIGNED INTEGER IN STEPS+1, SHOULD DOUBLE THE VALUE IF SIGNED
+    const T decrement = std::numeric_limits<T>::max() / steps;
     // whats our starting point
     const T start = std::numeric_limits<T>::max();
 
