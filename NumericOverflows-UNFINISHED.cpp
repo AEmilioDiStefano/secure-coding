@@ -21,23 +21,19 @@ T add_numbers(T const& start, T const& increment, unsigned long int const& steps
     for (unsigned long int i = 0; i < steps; ++i)
     {
 
-        //////////////////////////////////////////////////////////////////////
-        ////////////////////////////// START /////////////////////////////////
-        //////////////////////////////////////////////////////////////////////
-
-                // If the calculation causes overflow,
+        // If the calculation causes overflow,
         if (increment >= 0 && result > std::numeric_limits<T>::max() - increment)
         {
+            // then throw an overflow error.
             throw std::overflow_error("Incorrect due to overflow");
         }
+
+        // If the calculation causes an underflow error,
         else if (increment < 0 && result < std::numeric_limits<T>::min() - increment)
         {
+            // then throw an underflow error.
             throw std::underflow_error("Incorrect due to underflow");
         }
-
-        //////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////
 
         result += increment;
     }
@@ -64,23 +60,19 @@ T subtract_numbers(T const& start, T const& decrement, unsigned long int const& 
     for (unsigned long int i = 0; i < steps; ++i)
     {
 
-        //////////////////////////////////////////////////////////////////////
-        //////////////////////////// START ///////////////////////////////////
-        //////////////////////////////////////////////////////////////////////
-
-                // If the calculation causes overflow,
+        // If the calculation causes overflow,
         if (decrement < 0 && result > maximum + decrement)
         {
+            // then show an overflow error message.
             throw std::overflow_error("Incorrect due to overflow");
         }
+
+        // If the calculation causes underflow,
         else if (decrement >= 0 && result < minimum + decrement)
         {
+            // then show tan underflow error message.
             throw std::underflow_error("Incorrect due to underflow");
         }
-
-        //////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////
 
         result -= decrement;
     }
@@ -125,10 +117,6 @@ void test_overflow()
     std::cout << "Overflow Test of Type = " << typeid(T).name() << std::endl;
     // END DO NOT CHANGE
 
-//////////////////////////////////////////////////////////////////////
-/////////////////////////// START /////////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-
     // Show the result of subtracting the numbers without overflow.
     std::cout << "\tAdding Numbers Without Overflow (" << +start << ", " << +increment << ", " << steps << ") = ";
     T result = add_numbers<T>(start, increment, steps);
@@ -149,15 +137,11 @@ void test_overflow()
     {
         std::cout << error.what() << std::endl;
     }
-
-    /////////////////////////////////////////////////////////////////
      
     catch (const std::underflow_error& error)
     {
         std::cout << error.what() << std::endl;
     }
-    
-    /////////////////////////////////////////////////////////////////
 
     // Catch and print an exception if anything other than an overflow causes an error.
     catch (const std::exception& exception)
@@ -167,12 +151,6 @@ void test_overflow()
 
     // Add an extra line between calculations.
     std::cout << std::endl;
-
-    //////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////
-
-
 }
 
 template <typename T>
@@ -209,21 +187,11 @@ void test_underflow()
     std::cout << "Underflow Test of Type = " << typeid(T).name() << std::endl;
     // END DO NOT CHANGE
 
-//////////////////////////////////////////////////////////////////////
-//////////////////////////// START ///////////////////////////////////
-//////////////////////////////////////////////////////////////////////
-
-    //   ______ _______   __
-    //  | ____ |_  _ \ \ / /
-    //  | |__    | |  \ V /
-    //  |  __|   | |   > <
-    //  | |     _| |_ / . \
-    //  |_|    |_____/_/ \_\ 
-
     // Show the result of subtracting the numbers without underflow.
     std::cout << "\tSubtracting Numbers Without Underflow (" << +start << ", " << +decrement << ", " << steps << ") = ";
     auto result = subtract_numbers<T>(start, decrement, steps);
     std::cout << +result << std::endl;
+    auto resultWithout = result;
 
     // Show the result of subtracting the numbers with underflow.
     std::cout << "\tSubtracting Numbers With Underflow (" << +start << ", " << +decrement << ", " << (steps + 1) << ") = ";
@@ -233,6 +201,15 @@ void test_underflow()
     {
         result = subtract_numbers<T>(start, decrement, steps + 1);
         std::cout << +result << std::endl;
+
+        /////////////////////////////////////////////////////////////////////
+
+        if (resultWithout != result)
+        {
+            std::cout << "Incorrect due to Underflow" << std::endl;
+        }
+
+        /////////////////////////////////////////////////////////////////////
     }
 
     // Catch and print any underflow errors.
@@ -240,15 +217,11 @@ void test_underflow()
     {
         std::cout << error.what() << std::endl;
     }
-
-    /////////////////////////////////////////////////////////////////
-    
+  
     catch (const std::overflow_error& error)
     {
         std::cout << error.what() << std::endl;
     }
-     
-    /////////////////////////////////////////////////////////////////
 
     // Catch and print an error if anything other than an underflow causes an error.
     catch (const std::exception& exception)
@@ -258,11 +231,6 @@ void test_underflow()
 
     // Add an extra line between calculations.
     std::cout << std::endl;
-
-    //////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////
-
 
 }
 
