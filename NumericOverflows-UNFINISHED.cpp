@@ -28,11 +28,11 @@ T add_numbers(T const& start, T const& increment, unsigned long int const& steps
                 // If the calculation causes overflow,
         if (increment >= 0 && result > std::numeric_limits<T>::max() - increment)
         {
-            throw std::overflow_error("Invalid due to overflow");
+            throw std::overflow_error("Incorrect due to overflow");
         }
         else if (increment < 0 && result < std::numeric_limits<T>::min() - increment)
         {
-            throw std::underflow_error("Invalid due to underflow");
+            throw std::underflow_error("Incorrect due to underflow");
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -58,6 +58,8 @@ template <typename T>
 T subtract_numbers(T const& start, T const& decrement, unsigned long int const& steps)
 {
     T result = start;
+    T minimum = std::numeric_limits<T>::min();
+    T maximum = std::numeric_limits<T>::max();
 
     for (unsigned long int i = 0; i < steps; ++i)
     {
@@ -67,13 +69,13 @@ T subtract_numbers(T const& start, T const& decrement, unsigned long int const& 
         //////////////////////////////////////////////////////////////////////
 
                 // If the calculation causes overflow,
-        if (decrement < 0 && result > std::numeric_limits<T>::max() + decrement)
+        if (decrement < 0 && result > maximum + decrement)
         {
-            throw std::overflow_error("Invalid due to overflow");
+            throw std::overflow_error("Incorrect due to overflow");
         }
-        else if (decrement >= 0 && result < std::numeric_limits<T>::min() + decrement)
+        else if (decrement >= 0 && result < minimum + decrement)
         {
-            throw std::underflow_error("Invalid due to underflow");
+            throw std::underflow_error("Incorrect due to underflow");
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -143,10 +145,19 @@ void test_overflow()
     }
 
     // Catch and print any overflow errors.
-    catch (const std::overflow_error& exception)
+    catch (const std::overflow_error& error)
     {
-        std::cout << exception.what() << std::endl;
+        std::cout << error.what() << std::endl;
     }
+
+    /////////////////////////////////////////////////////////////////
+     
+    catch (const std::underflow_error& error)
+    {
+        std::cout << error.what() << std::endl;
+    }
+    
+    /////////////////////////////////////////////////////////////////
 
     // Catch and print an exception if anything other than an overflow causes an error.
     catch (const std::exception& exception)
@@ -225,10 +236,19 @@ void test_underflow()
     }
 
     // Catch and print any underflow errors.
-    catch (const std::underflow_error& exception)
+    catch (const std::underflow_error& error)
     {
-        std::cout << exception.what() << std::endl;
+        std::cout << error.what() << std::endl;
     }
+
+    /////////////////////////////////////////////////////////////////
+    
+    catch (const std::overflow_error& error)
+    {
+        std::cout << error.what() << std::endl;
+    }
+     
+    /////////////////////////////////////////////////////////////////
 
     // Catch and print an error if anything other than an underflow causes an error.
     catch (const std::exception& exception)
