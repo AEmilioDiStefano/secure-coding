@@ -231,7 +231,7 @@ void test_underflow()
     }
 
     // Catch and print an error if anything other than an underflow causes an error.
-    catch (const std::exception& error)
+    catch (const std::exception& exception)
     {
         std::cout << "An unknown error occured" << exception.what();
     }
