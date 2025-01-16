@@ -200,14 +200,15 @@ void test_underflow()
     try
     {
         result = subtract_numbers<T>(start, decrement, steps + 1);
-        std::cout << +result << std::endl;
+        std::cout << +result;
 
-        // If the result without overflow does not equal the result with underflow,
+        // If the result of subtraction with overflow is diferent from the result of subtraction without overflow, 
         if (resultWithout != result)
         {
-            // then let the user know that there was underflow.
-            std::cout << "Incorrect due to Underflow" << std::endl;
+            // then inform the user that there was overflow.
+            std::cout << " Incorrect due to Underflow" << std::endl;
         }
+
     }
 
     // Catch and print any underflow errors.
