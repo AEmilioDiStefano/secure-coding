@@ -1,0 +1,62 @@
+// BufferOverflow.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iomanip>
+#include <iostream>
+#include <String>
+
+int main()
+{
+  std::cout << "Buffer Overflow Example" << std::endl;
+
+  // TODO: The user can type more than 20 characters and overflow the buffer, resulting in account_number being replaced -
+  //  even though it is a constant and the compiler buffer overflow checks are on.
+  //  You need to modify this method to prevent buffer overflow without changing the account_number
+  //  variable, and its position in the declaration. It must always be directly before the variable used for input.
+  //  You must notify the user if they entered too much data.
+
+  const std::string account_number = "CharlieBrown42";
+
+  /////////////////////////////////////////////////////////
+  ///////////////////////// START /////////////////////////
+  /////////////////////////////////////////////////////////
+
+  // CHange the user_input variable to a string type.
+  std::string user_input;
+  
+  /////////////////////////////////////////////////////////
+  ////////////////////////// END //////////////////////////
+  /////////////////////////////////////////////////////////
+
+  std::cout << "Enter a value: ";
+  std::cin >> user_input;
+
+  /////////////////////////////////////////////////////////
+  ///////////////////////// START /////////////////////////
+  /////////////////////////////////////////////////////////
+
+  // If the user input contains more than 20 characters, 
+  if (user_input.length() > 20)
+  {
+	  // then tell the user that they entered too many digits and ask them
+	  // to try again using the sppropriate number of digits.
+	  std::cout << "The input incuded too many digits. Please enter a number with 20 digits or less." << std::endl << std::endl;
+  }
+
+  // Put this part of the code in an "else" statement so that the number
+  // will only be shown if the input has the appropriate number of digits.
+  else
+  {
+	  std::cout << "You entered: " << user_input << std::endl;
+	  std::cout << "Account Number = " << account_number << std::endl;
+  }
+
+  /////////////////////////////////////////////////////////
+  ////////////////////////// END //////////////////////////
+  /////////////////////////////////////////////////////////
+
+  
+}
+
+// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
+// Debug program: F5 or Debug > Start Debugging menu
