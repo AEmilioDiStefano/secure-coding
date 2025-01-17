@@ -87,26 +87,35 @@ bool run_query(sqlite3* db, const std::string& sql, std::vector< user_record >& 
   /////////////////////// START ////////////////////////////////
   //////////////////////////////////////////////////////////////
 
-  std::vector<std::string> tolkien_burns = { "  \"You shall not pass!\"\n    -Gandalf", "  \"Go back to the shadows!\"\n    -Gandalf", "  \"Sneaky little hobbitses...\"\n    -Smeagol"};
+  // Create a vector called savage_burns full of movie references as a funny message to 
+  // potential hackers.
+  // Knowledge that the nature of their attack was detected may discourage them from 
+  // continuing to attack.  Appealing to their sense of humor may also help convince them 
+  // to stop attacking the system. 
+  std::vector<std::string> savage_burns = { "  \"You shall not pass!\"\n    -Gandalf", "  \"Go back to the shadows!\"\n    -Gandalf", "  \"Sneaky little hobbitses...\"\n    -Smeagol", "  \"Sneaky little hobbitses...\"\n    -Smeagol", "  \"Your words are poison.\"\n    -Eowyn"};
 
   // This variable holds the number of elements in the 'strings' vector.
-  int number_of_elements = tolkien_burns.size();
+  int number_of_elements = savage_burns.size();
 
   // Choose a random 
   int random_burn = std::rand() % number_of_elements;
 
   // Check to see if any combination of letters, numbers, or other characters 
   // are being used on either side of an 'OR value=value' SQL injection.
-
   std::regex re("('(.*)[a-zA-Z](.*)'='(.*)[a-zA-Z](.*)')|([0-9]=[0-9])");
   std::smatch match;
 
+  // If an attack is detected, print a message communicating that the system 
+  // was able to 
   if (std::regex_search(sql.begin(), sql.end(), match, re) && match.size() > 1) {
+      // Print the SQL query resulting from the input.
       std::cout << std::endl << "The SQL query resulting from your input was:" << std::endl << sql << std::endl;
+      // Knowledge that the nature of their attack was detected may discourage 
+      // potential hackers from continuing to attack. 
       std::cout << "An SQL Injection attempt has been detected." << std::endl << std::endl;
-      std::cout << tolkien_burns[random_burn] << std::endl;
+      // Print a random comical pop-culture insult from the sagage_burns list.
+      std::cout << savage_burns[random_burn] << std::endl;
       
-
       return false;
   }
 
@@ -114,6 +123,7 @@ bool run_query(sqlite3* db, const std::string& sql, std::vector< user_record >& 
   /////////////////////// STOP /////////////////////////////////
   //////////////////////////////////////////////////////////////
 
+  // Print an error message if the usr input results in an error.
   char* error_message;
   if(sqlite3_exec(db, sql.c_str(), callback, &records, &error_message) != SQLITE_OK)
   {
