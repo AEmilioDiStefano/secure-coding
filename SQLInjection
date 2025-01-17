@@ -86,8 +86,8 @@ bool run_query(sqlite3* db, const std::string& sql, std::vector< user_record >& 
   // Create a vector called savage_burns full of movie references as a funny message to 
   // potential hackers.
   // Knowledge that the nature of their attack was detected may discourage them from 
-  // continuing to attack.  Appealing to their sense of humor may also help convince them 
-  // to stop attacking the system. 
+  // continuing to attack.  Appealing to their sense of humor may make them less 
+  // likely for them to take the message as a challenge. 
   std::vector<std::string> savage_burns = { "  \"You shall not pass!\"\n    -Gandalf", "  \"Go back to the shadows!\"\n    -Gandalf", "  \"Sneaky little hobbitses...\"\n    -Smeagol", "  \"Your words are poison.\"\n    -Eowyn"};
 
   // This variable holds the number of elements in the 'strings' vector.
@@ -102,7 +102,7 @@ bool run_query(sqlite3* db, const std::string& sql, std::vector< user_record >& 
   std::smatch match;
 
   // If an attack is detected, print a message communicating that the system 
-  // was able to 
+  // was able to detect it.
   if (std::regex_search(sql.begin(), sql.end(), match, re) && match.size() > 1) {
       // Print the SQL query resulting from the input.
       std::cout << std::endl << "The SQL query resulting from your input was:" << std::endl << sql << std::endl;
