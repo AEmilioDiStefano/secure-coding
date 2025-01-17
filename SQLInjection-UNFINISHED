@@ -83,10 +83,6 @@ bool run_query(sqlite3* db, const std::string& sql, std::vector< user_record >& 
   // clear any prior results
   records.clear();
 
-  //////////////////////////////////////////////////////////////
-  /////////////////////// START ////////////////////////////////
-  //////////////////////////////////////////////////////////////
-
   // Create a vector called savage_burns full of movie references as a funny message to 
   // potential hackers.
   // Knowledge that the nature of their attack was detected may discourage them from 
@@ -97,12 +93,12 @@ bool run_query(sqlite3* db, const std::string& sql, std::vector< user_record >& 
   // This variable holds the number of elements in the 'strings' vector.
   int number_of_elements = savage_burns.size();
 
-  // Choose a random 
+  // Choose a random element from the savage_burns vector.
   int random_burn = std::rand() % number_of_elements;
 
   // Check to see if any combination of letters, numbers, or other characters 
   // are being used on either side of an 'OR value=value' SQL injection.
-  std::regex re("('(.*)[a-zA-Z](.*)'='(.*)[a-zA-Z](.*)')|([0-9]=[0-9])");
+  std::regex re("('[a-zA-Z0-9_/.]*'='[\\w/.]*')|([0-9]=[0-9])|([a-z]=[a-z])|([A-Z]=[A-Z])");
   std::smatch match;
 
   // If an attack is detected, print a message communicating that the system 
@@ -118,10 +114,6 @@ bool run_query(sqlite3* db, const std::string& sql, std::vector< user_record >& 
       
       return false;
   }
-
-  //////////////////////////////////////////////////////////////
-  /////////////////////// STOP /////////////////////////////////
-  //////////////////////////////////////////////////////////////
 
   // Print an error message if the usr input results in an error.
   char* error_message;
