@@ -88,7 +88,7 @@ bool run_query(sqlite3* db, const std::string& sql, std::vector< user_record >& 
   // Knowledge that the nature of their attack was detected may discourage them from 
   // continuing to attack.  Appealing to their sense of humor may also help convince them 
   // to stop attacking the system. 
-  std::vector<std::string> savage_burns = { "  \"You shall not pass!\"\n    -Gandalf", "  \"Go back to the shadows!\"\n    -Gandalf", "  \"Sneaky little hobbitses...\"\n    -Smeagol", "  \"Sneaky little hobbitses...\"\n    -Smeagol", "  \"Your words are poison.\"\n    -Eowyn"};
+  std::vector<std::string> savage_burns = { "  \"You shall not pass!\"\n    -Gandalf", "  \"Go back to the shadows!\"\n    -Gandalf", "  \"Sneaky little hobbitses...\"\n    -Smeagol", "  \"Your words are poison.\"\n    -Eowyn"};
 
   // This variable holds the number of elements in the 'strings' vector.
   int number_of_elements = savage_burns.size();
