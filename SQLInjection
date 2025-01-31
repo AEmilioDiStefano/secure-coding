@@ -5,7 +5,7 @@
 #include <locale>
 #include <tuple>
 #include <vector>
-#include <regex> 
+#include <regex>
 
 #include "sqlite3.h"
 
