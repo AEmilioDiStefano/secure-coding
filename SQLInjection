@@ -6,7 +6,6 @@
 #include <tuple>
 #include <vector>
 #include <regex>
-
 #include "sqlite3.h"
  
 // DO NOT CHANGE
