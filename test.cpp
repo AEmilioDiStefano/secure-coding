@@ -59,7 +59,7 @@ protected:
 //  CollectionTest::StartUp is called.
 // Following this method (and all other TEST_F defined methods),
 //  CollectionTest::TearDown is called
-TEST_F(CollectionTest, CollectionSmartPointerIsNotNull)
+TEST_F(CollectionTest, VerifyCollectionSmartPointerIsNotNull)
 {
   // is the collection created
   ASSERT_TRUE(collection);
@@ -69,7 +69,7 @@ TEST_F(CollectionTest, CollectionSmartPointerIsNotNull)
 }
 
 // Test that a collection is empty when created.
-TEST_F(CollectionTest, IsEmptyOnCreate)
+TEST_F(CollectionTest, VerifyIsEmptyOnCreate)
 {
   // is the collection empty?
   ASSERT_TRUE(collection->empty());
@@ -86,7 +86,7 @@ TEST_F(CollectionTest, IsEmptyOnCreate)
 // }
 
 // This test verifies adding a single value to an empty collection.
-TEST_F(CollectionTest, CanAddToEmptyVector)
+TEST_F(CollectionTest, VerifyCanAddToEmptyVector)
 {
 
   // is the collection empty?
@@ -107,7 +107,7 @@ TEST_F(CollectionTest, CanAddToEmptyVector)
 }
 
 // This test verifies adding five values to collection.
-TEST_F(CollectionTest, CanAddFiveValuesToVector)
+TEST_F(CollectionTest, VerifyCanAddFiveValuesToVector)
 {
   
     // Check to see if the collection is empty.
@@ -154,7 +154,7 @@ TEST_F(CollectionTest, VerifyMaxSize)
 }
 
 // This test verifies that capacity is greater than or equal to size for 0, 1, 5, 10 entries.
-TEST_F(CollectionTest, VerifyCapacity)
+TEST_F(CollectionTest, VerifyCapacityEqualToSize)
 {
     // Check to see if the collection is empty.
     ASSERT_TRUE(collection->empty());
@@ -211,7 +211,7 @@ TEST_F(CollectionTest, VerifyResizingDecreases) {
 }
 
 // This test verifies that resizing decreases the collection to zero
-TEST_F(CollectionTest, ResizeDecreasesToZero) {
+TEST_F(CollectionTest, VerifyResizeDecreasesToZero) {
 
     // Add 10 entries to the collection.
     add_entries(10);
@@ -246,7 +246,7 @@ TEST_F(CollectionTest, VerifyClearErasesCollection)
 }
 
 // This test verifies that erase(begin, end) erases the collection.
-TEST_F(CollectionTest, VerifyEraseAll) {
+TEST_F(CollectionTest, VerifyEraseAllWithBeginEnd) {
 
     // Add 10 entries to the collection.
     add_entries(10);
@@ -259,7 +259,7 @@ TEST_F(CollectionTest, VerifyEraseAll) {
 }
 
 // This test verifies that reserve increases the capacity but not the size of the collection
-TEST_F(CollectionTest, VerifyReserveIncrease) {
+TEST_F(CollectionTest, VerifyReserveIncreaseWithoutSizeIncrease) {
 
     // Add 10 entries to the collection.
     add_entries(5);
@@ -278,14 +278,10 @@ TEST_F(CollectionTest, VerifyReserveIncrease) {
     ASSERT_TRUE(collection->capacity() > startingCapacity);
 }
 
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-
-// TODO: Create a test to verify the std::out_of_range exception is thrown when calling at() with an index out of bounds
+// This test verifies that the std::out_of_range exception is thrown when calling at() with an index out of bounds.
 // NOTE: This is a negative test
 
-TEST_F(CollectionTest, VerifyAtOutOfRange) 
+TEST_F(CollectionTest, VerifyAtOutOfRangeNegative) 
 {
 
     // Add 5 entries to the collection.
@@ -296,4 +292,78 @@ TEST_F(CollectionTest, VerifyAtOutOfRange)
     EXPECT_THROW(collection->at(10), std::out_of_range);
 }
 
-// TODO: Create 2 unit tests of your own to test something on the collection - do 1 positive & 1 negative
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+// Create 2 unit tests of your own to test something on the collection - do 1 positive & 1 negative
+
+// This positive test verifies that the 'push_back()' function successfully adds
+// one entry to the collection.
+TEST_F(CollectionTest, VerifyPushAddsAnEntry)
+{
+    // Add 10 entries to the collection.
+    add_entries(10);
+
+    // Use the 'push_back()' function, which should add another entry,
+    // which should make the number of entries 11.
+    collection->push_back(1);
+
+    // Check to make sure that the size of the collection is now 11 after
+    // using the 'push_back()' function.
+    ASSERT_TRUE(collection->size() == 11);
+}
+
+// This test verifies that the 'pop_back()' function successfully removes
+// one entry from the collection.
+// (NEGATIVE TEST)
+TEST_F(CollectionTest, VerifyPopBackRemovesEntryNegative) {
+
+    // Add 10 entries to the collection.
+    add_entries(10);
+
+    // Use 'pop_back()' which should remove the last entry,
+    //which should make the number of entries 9.
+    collection->pop_back();
+
+    // Make sure that referencing the 10th item in the collection,
+    // which is now only 9 items long, throws an 'out_of_range' 
+    // exception.
+    EXPECT_THROW(collection->at(10), std::out_of_range);
+}
+
+// EXTRA POSITIVE TEST
+// This test verifies that the 'pop_back()' function successfully removes
+// one entry from the collection.
+
+TEST_F(CollectionTest, VerifyPopBackRemovesEntry) {
+
+    // Add 10 entries to the collection.
+    add_entries(10);
+
+    // Use 'pop_back()' which should remove the last entry,
+    //which should make the number of entries 9.
+    collection->pop_back();
+
+    // Make sure that after using the 'pop_back' function the size of the
+    // collection is 9.
+    ASSERT_EQ(collection->size(), 9);
+}
+
+// EXTRA NEGATIVE TEST
+// This negative test verifies that the 'push_back()' function only adds one
+// entry to the collection.
+// (NEGATIVE TEST)
+TEST_F(CollectionTest, VerifyPushOnlyAddsOneEntryNegative)
+{
+    // Add 10 entries to the collection.
+    add_entries(10);
+
+    // Use the 'push_back()' function, which should add another entry,
+    // which should make the number of entries 11.
+    collection->push_back(1);
+
+    // Check that there is no 12th entry after using the 'puh_back()' function
+    // to add one entry to the collection which originally had 10 entries.
+    EXPECT_THROW(collection->at(12), std::out_of_range);
+}
