@@ -8,11 +8,9 @@
 #include <regex>
 #include "sqlite3.h"
 
-// DO NOT CHANGE
 typedef std::tuple<std::string, std::string, std::string> user_record;
 const std::string str_where = " where ";
 
-// DO NOT CHANGE
 static int callback(void* possible_vector, int argc, char** argv, char** azColName)
 {
     if (possible_vector == NULL)
@@ -33,7 +31,6 @@ static int callback(void* possible_vector, int argc, char** argv, char** azColNa
     return 0;
 }
 
-// DO NOT CHANGE
 bool initialize_database(sqlite3* db)
 {
     char* error_message = NULL;
@@ -125,7 +122,6 @@ bool run_query(sqlite3* db, const std::string& sql, std::vector< user_record >& 
     return true;
 }
 
-// DO NOT CHANGE
 bool run_query_injection(sqlite3* db, const std::string& sql, std::vector< user_record >& records)
 {
     std::string injectedSQL(sql);
@@ -161,8 +157,6 @@ bool run_query_injection(sqlite3* db, const std::string& sql, std::vector< user_
     return run_query(db, injectedSQL, records);
 }
 
-
-// DO NOT CHANGE
 void dump_results(const std::string& sql, const std::vector< user_record >& records)
 {
     std::cout << std::endl << "SQL: " << sql << " ==> " << records.size() << " records found." << std::endl;
@@ -173,7 +167,6 @@ void dump_results(const std::string& sql, const std::vector< user_record >& reco
     }
 }
 
-// DO NOT CHANGE
 void run_queries(sqlite3* db)
 {
     char* error_message = NULL;
