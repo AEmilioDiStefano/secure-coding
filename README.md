@@ -1,0 +1,1 @@
+### This is a repository for the Secure Coding course CS-405 at Southern New Hampshire University.  The final journal entry is included as a DOCX file as specified in the prompy for our GitHub portfolio submission.
